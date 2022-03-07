@@ -15,6 +15,13 @@ namespace TicTacToe_console
                 {"7", "8", "9" }
             };
 
+        static string[,] templateArray =
+            {
+                {"1", "2", "3" },
+                {"4", "5", "6" },
+                {"7", "8", "9" }
+            };
+
         static void Main(string[] args)
         {
             int input = 0;
@@ -24,11 +31,12 @@ namespace TicTacToe_console
             int moveCount = 0;
 
             bool isValid = false;
+            string restartFlag = "";
 
             printoutTicTacToe();
             do
             {
-                Console.WriteLine("Please input value [1-9] or -1 to exit!");
+                Console.WriteLine("Please input value [1-9]!");
                 Console.WriteLine("Player {0}: Choose your field!", turns == true ? 1 : 2);
                 input = 0;
                 isValid = false;
@@ -48,13 +56,14 @@ namespace TicTacToe_console
                         if (ticTacToeArray[position1, position2] != "X" && 
                             ticTacToeArray[position1, position2] != "O")
                         {
-                            
+                            // update the Tic Tac Toe Array
                             ticTacToeArray[position1, position2] = turns == true ? "X" : "O";
                             isValid = true;
                             moveCount++;
                         }
                         else
                         {
+                            // exception
                             Console.WriteLine("Please input correct value!");
                             _ = Console.ReadKey();
                         }
@@ -62,9 +71,11 @@ namespace TicTacToe_console
                 }
                 else
                 {
+                    // exception
                     Console.WriteLine("Please input correct value!");
                     _ = Console.ReadKey();
                 }
+
                 Console.Clear();
                 printoutTicTacToe();
 
@@ -77,6 +88,7 @@ namespace TicTacToe_console
                     }
                     else
                     {                     
+                        // to swap the player and check the movement count
                         if (moveCount >= 9)
                         {
                             Console.WriteLine("Draw game!");
@@ -90,6 +102,19 @@ namespace TicTacToe_console
                                 turns = false;
                         }
                         
+                    }
+                    if (input==-1)
+                    {
+                        Console.Write("Restart the game? (Y/N)");
+                        restartFlag = Console.ReadLine().ToString();
+                        if (restartFlag.ToUpper() == "Y")
+                        {
+                            ticTacToeArray = templateArray;
+                            input = 0;
+                            moveCount = 0;
+                            Console.Clear();
+                            printoutTicTacToe();
+                        }
                     }
                 }
             } while (input != -1);
